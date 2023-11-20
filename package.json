@@ -4,6 +4,9 @@
     "express-handlebars": "^7.1.2",
     "nodemon": "^3.0.1"
   },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "devDependencies": {
     "prisma": "^5.6.0"
   }
