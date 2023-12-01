@@ -1,16 +1,22 @@
 
     <h1>Tableau de bord de : {{Donnee}}</h1>
     <div class="dashboard">
-        <div class="card">
-            <h2>Card 1</h2>
-            <p>Quelques informations ici</p>
-        </div>
-        <div class="card">
-            <h2>Card 2</h2>
-            <p>Quelques informations ici</p>
-        </div>
-        <div class="card">
-            <h2>Card 3</h2>
-            <p>Quelques informations ici</p>
-        </div>
+    <div class="card">
+        <h2>Créer un groupe</h2>
+        <form id="create-group-form">
+            <label for="group-name">Nom du groupe :</label><br>
+            <input type="text" id="group-name" name="group-name"><br>
+            <input type="submit" value="Créer">
+        </form>
     </div>
+    <div class="card">
+        <h2>Ajouter un utilisateur à un groupe</h2>
+        <form id="add-user-form">
+            <label for="user-name">Nom d'utilisateur :</label><br>
+            <input type="text" id="user-name" name="user-name"><br>
+            <label for="group-name">Nom du groupe :</label><br>
+            <input type="text" id="group-name" name="group-name"><br>
+            <input type="submit" value="Ajouter">
+        </form>
+    </div>
+</div>
