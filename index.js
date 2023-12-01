@@ -1,32 +1,58 @@
-const express = require('express');
-const{ engine } = require('express-handlebars');
-const { resolve } = require('path');
+// index.js
 
+const express = require('express');
+const session = require('express-session');
+const { engine } = require('express-handlebars');
+const bodyParser = require('body-parser'); // Ajout du middleware body-parser
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient();
 const app = express();
 
+// Configuration du middleware body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuration d'Express Handlebars comme moteur de modèle
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
-    res.render('home');
+
+
+// Routes
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
-
-app.get('/users/:id', (req, res) => {
-  res.render('home', { Donnee: req.params.id });
+app.get('/register', (req, res) => {
+  res.render('register');
 });
 
-app.get('/bonjour', (req, res) => {
-  let maDonnee = "Bonjour le monde !";
-  let condition = false; // Cette valeur peut être définie dynamiquement
-  res.render('home', { Donnee: maDonnee, condition: condition });
+// Gestionnaire de route POST pour /register
+app.post('/register', async (req, res) => {
+  const { nom, prenom, email, motDePasse } = req.body;
+
+  try {
+    // Enregistrement des données dans la base de données avec Prisma
+    const utilisateur = await prisma.utilisateur.create({
+      data: {
+        nom,
+        prenom,
+        email,
+        motDePasse,
+      },
+    });
+
+    // Redirection vers une page de succès ou une autre page appropriée
+    res.redirect('/register-success');
+  } catch (error) {
+    // Gestion des erreurs, vous pouvez envoyer un message d'erreur à la page d'inscription
+    res.render('register', { error: 'Une erreur s\'est produite lors de l\'inscription.' });
+  }
 });
 
-app.get('/tableau', (req, res) => {
-  let monTableau = ["élément 1", "élément 2", "élément 3"];
-  let condition = true;
-  res.render('home', { tableau: monTableau, condition: condition});
+// Démarrer le serveur
+const PORT = process.env.PORT || 3010;
+app.listen(PORT, () => {
+  console.log(`Serveur en cours d'exécution sur http://localhost:${PORT}`);
 });
-
-app.listen(3010);
