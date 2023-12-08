@@ -44,10 +44,17 @@ app.post('/register', async (req, res) => {
     });
 
     // Redirection vers une page de succès ou une autre page appropriée
-    res.redirect('/register-success');
+    res.redirect('/login');
   } catch (error) {
     // Gestion des erreurs, vous pouvez envoyer un message d'erreur à la page d'inscription
-    res.render('register', { error: 'Une erreur s\'est produite lors de l\'inscription.' });
+    if (error.code == 'P2002')
+    {
+      res.render('register', { error: 'Cette adresse mail est déjà utilisée'});
+    }
+    else
+    {
+      res.render('register', { error: 'Une erreur s\'est produite lors de l\'inscription.' });
+    }
   }
 });
 
