@@ -72,6 +72,26 @@ router.get('/login', (req, res) => {
   });
   
 
+  // Middleware to check if the user is authenticated
+const isAuthenticated = (req, res, next) => {
+    if (req.session.user) {
+      // User is authenticated, proceed to the next middleware or route
+      next();
+    } else {
+      // User is not authenticated, redirect to login page
+      res.redirect('/login');
+    }
+  };
+  
+  // Routes
+router.get('/', isAuthenticated, (req, res) => {
+    // If the middleware passes, the user is authenticated
+    // Render the dashboard or any other page you want to display for authenticated users
+    res.render('dashboard', { user: req.session.user });
+  });
+  
+  
+
 
 // Export the router to use in other files
 module.exports = router;

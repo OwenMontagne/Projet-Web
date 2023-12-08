@@ -8,7 +8,7 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 3600000, // Session expires in 1 hour
+    maxAge: 3000, // Session expires in 1 hour
   },
 };
 
