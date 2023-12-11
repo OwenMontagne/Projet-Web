@@ -1,32 +1,33 @@
+// index.js
+
 const express = require('express');
-const{ engine } = require('express-handlebars');
-const { resolve } = require('path');
+const { engine } = require('express-handlebars');
+
+const bodyParser = require('body-parser');
+
+const { sessionMiddleware } = require('./session.js'); // Import session middleware
 
 const app = express();
 
+// Configuration du middleware body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuration d'Express Handlebars comme moteur de modèle
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
-    res.render('dashboard');
+// Use session middleware
+app.use(sessionMiddleware);
+
+// Import the router
+const routes = require('./routes.js');
+
+// Use the router in your Express app
+app.use('/', routes);
+
+// Démarrer le serveur
+const PORT = process.env.PORT || 3010;
+app.listen(PORT, () => {
+  console.log(`Serveur en cours d'exécution sur http://localhost:${PORT}`);
 });
-
-
-app.get('/users/:id', (req, res) => {
-  res.render('dashboard', { Donnee: req.params.id });
-});
-
-app.get('/bonjour', (req, res) => {
-  let maDonnee = "Bonjour le monde !";
-  let condition = false; // Cette valeur peut être définie dynamiquement
-  res.render('dashboard', { Donnee: maDonnee, condition: condition });
-});
-
-app.get('/tableau', (req, res) => {
-  let monTableau = ["élément 1", "élément 2", "élément 3"];
-  let condition = true;
-  res.render('dashboard', { tableau: monTableau, condition: condition});
-});
-
-app.listen(3010);

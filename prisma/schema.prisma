@@ -10,11 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User model
 model Utilisateur {
-  id          Int      @id @default(autoincrement())
-  motDePasse  String   @db.VarChar(255)
-  nom         String
-  prenom      String
-  email       String   @unique
-  dateNaissance DateTime
+  user_id       Int      @id @default(autoincrement())
+  user_passw    String   @db.VarChar(30)
+  user_name     String   @db.VarChar(30)
+  user_firstname String @db.VarChar(30)
+  user_email    String   @db.VarChar(50) @unique
+  groupes       Appartenance_User_Grp[]
+}
+
+// Group model
+model Groupe {
+  grp_id    Int      @id @default(autoincrement())
+  grp_name  String   @db.VarChar(100)
+  users     Appartenance_User_Grp[]
+}
+
+// Membership model
+model Appartenance_User_Grp {
+  Id_Appartenance_User_Grp Int      @id @default(autoincrement())
+  grp_id                   Int
+  user_id                  Int
+  utilisateur              Utilisateur @relation(fields: [user_id], references: [user_id])
+  groupe                   Groupe      @relation(fields: [grp_id], references: [grp_id])
 }
