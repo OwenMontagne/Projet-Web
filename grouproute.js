@@ -1,14 +1,30 @@
-const express = require('express');
-const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-
-router.post('/create-group', async (req, res) => {
-  // code pour créer un groupe
+document.getElementById('group-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const grp_name = document.getElementById('grp_name').value;
+  fetch('/group', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ grp_name }),
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch((error) => console.error('Error:', error));
 });
 
-router.post('/add-user-to-group', async (req, res) => {
-  // code pour ajouter un utilisateur à un groupe
+document.getElementById('user-group-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const user_id = document.getElementById('user_id').value;
+  const grp_id = document.getElementById('grp_id').value;
+  fetch('/user-group', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id, grp_id }),
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch((error) => console.error('Error:', error));
 });
-
-module.exports = router;
