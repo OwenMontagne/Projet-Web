@@ -1,28 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Créer un groupe</title>
-    <style>
-        /* Ajoutez ici votre CSS */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
 </head>
 <body>
-    <h1>Créer un groupe</h1>
-    <form id="group-form">
-        <label for="grp_name">Nom du groupe:</label><br>
-        <input type="text" id="grp_name" name="grp_name"><br>
-        <input type="submit" value="Créer">
-    </form>
+  <h1>Dasboard</h1>
 
-    <h1>Ajouter un utilisateur à un groupe</h1>
-    <form id="user-group-form">
-        <label for="user_id">ID de l'utilisateur:</label><br>
-        <input type="text" id="user_id" name="user_id"><br>
-        <label for="grp_id">ID du groupe:</label><br>
-        <input type="text" id="grp_id" name="grp_id"><br>
-        <input type="submit" value="Ajouter">
-    </form>
+  <form method="POST" action="/creategroupe">
+    <label for="NomGroupe">Nom du groupe</label>
+    <input type="NomGroupe" id="group_name" name="group_name" required>
+    <button type="submit">Créer</button>
+  </form>
 
-    <script src="grouproute.js"></script>
 </body>
 </html>
