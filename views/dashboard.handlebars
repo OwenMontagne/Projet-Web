@@ -1,22 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
 
-    <h1>Tableau de bord de : {{Donnee}}</h1>
-    <div class="dashboard">
-    <div class="card">
-        <h2>Créer un groupe</h2>
-        <form id="create-group-form">
-            <label for="group-name">Nom du groupe :</label><br>
-            <input type="text" id="group-name" name="group-name"><br>
-            <input type="submit" value="Créer">
-        </form>
-    </div>
-    <div class="card">
-        <h2>Ajouter un utilisateur à un groupe</h2>
-        <form id="add-user-form">
-            <label for="user-name">Nom d'utilisateur :</label><br>
-            <input type="text" id="user-name" name="user-name"><br>
-            <label for="group-name">Nom du groupe :</label><br>
-            <input type="text" id="group-name" name="group-name"><br>
-            <input type="submit" value="Ajouter">
-        </form>
-    </div>
-</div>
+</head>
+<body>
+  <h1>Dasboard</h1>
+
+  <form method="POST" action="/create-group">
+    <label for="NomGroupe">Nom du groupe</label>
+    <input type="NomGroupe" id="grp_name" name="grp_name" required>
+    <button type="submit">Créer</button>
+  </form>
+
+</body>
+</html>

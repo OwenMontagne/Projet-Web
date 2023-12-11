@@ -9,6 +9,8 @@ const { sessionMiddleware } = require('./session.js'); // Import session middlew
 
 const app = express();
 
+
+
 // Configuration du middleware body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,6 +27,9 @@ const routes = require('./routes.js');
 
 // Use the router in your Express app
 app.use('/', routes);
+
+//Passage des fichiers statiques
+app.use(express.static('STYLES'));
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 3010;
