@@ -13,6 +13,7 @@ router.post('/create-group', async (req, res) => {
       },
     });
 
+
     res.redirect('/dashboard');
   } catch (error) {
     // Gestion des erreurs, vous pouvez envoyer un message d'erreur à la page d'inscription
