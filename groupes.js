@@ -40,4 +40,47 @@ router.post('/add-user-to-group', async (req, res) => {
   // code pour ajouter un utilisateur à un groupe
 });
 
+// Middleware to check if the user belongs to the group
+const userBelongsToGroup = async (req, res, next) => {
+  try {
+    if (!req.session.user) {
+      // If the user is not logged in, redirect to login
+      return res.redirect('/login');
+    }
+
+    const userId = req.session.user.user_id;
+    const groupId = parseInt(req.params.id, 10);
+    const userBelongsToGroup = await prisma.appartenance_User_Grp.findMany({
+      where: {
+        user_id: userId,
+        grp_id: groupId,
+      },
+    });
+
+    if (userBelongsToGroup.length > 0) {
+      next();
+    } else {
+      res.status(403).send('Vous n\'appartenez pas à ce groupe, ou celui-ci est inexistant.');
+    }
+  } catch (error) {
+    console.error('Error checking group membership:', error);
+    res.status(500).send('Une erreur s\'est produite lors de la vérification de l\'appartenance au groupe.');
+  }
+};
+
+router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
+  const groupId = parseInt(req.params.id, 10);
+  const group = await prisma.groupe.findUnique({
+    where: {
+      grp_id: groupId,
+    },
+  });
+
+  if (group) {
+    res.render('groupe', { group });
+  } else {
+    res.status(404).send('Groupe not found');
+  }
+});
+
 module.exports = router;

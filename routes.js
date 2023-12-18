@@ -32,7 +32,7 @@ router.use(require('./login.js'));
 router.use(require('./register.js'));
 
 //Utiliser le grouproute.js
-router.use(require('./grouproute.js'));
+router.use(require('./groupes.js'));
 
 //Utiliser le dashboard.js
 router.use(require('./dashboard.js'));
