@@ -4,7 +4,7 @@ const express_session = require('express-session');
 
 // Session configuration
 const sessionConfig = {
-  secret: 'your-secret-key', // Change this to a secure secret key
+  secret: 'laclefsecretesupersecuriseesinoncavavousmoicavasuper', // Change this to a secure secret key
   resave: false,
   saveUninitialized: false,
   cookie: {

@@ -5,6 +5,7 @@ const router = express.Router(); // Create an Express router
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+
   // Middleware to check if the user is authenticated
   const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
@@ -23,10 +24,6 @@ const prisma = new PrismaClient();
     res.redirect('/dashboard', { user: req.session.user });
   });
 
-  router.get('/dashboard', (req, res) => {
-    // Render your dashboard here
-    res.render('dashboard', { user: req.session.user });
-  });
   
 //Utiliser le login.js
 router.use(require('./login.js'));
@@ -36,6 +33,9 @@ router.use(require('./register.js'));
 
 //Utiliser le grouproute.js
 router.use(require('./grouproute.js'));
+
+//Utiliser le dashboard.js
+router.use(require('./dashboard.js'));
   
 
 

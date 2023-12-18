@@ -19,8 +19,6 @@ router.get('/login', (req, res) => {
         },
       });
   
-      //Dehash du mot de passe
-      //const user_dehash_passw = await bcrypt.compare(user_passw, utilisateur.user_passw);
       if (!utilisateur || utilisateur.user_passw !== user_passw) {
         req.session.loginError = 'Adresse email ou mot de passe incorrect';
         res.redirect('/login');

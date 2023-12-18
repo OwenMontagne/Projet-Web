@@ -7,13 +7,30 @@
 
 </head>
 <body>
-  <h1>Dasboard</h1>
+  {{#if user}}
+    <h1>Dashboard</h1>
 
-  <form method="POST" action="/create-group">
-    <label for="NomGroupe">Nom du groupe</label>
-    <input type="NomGroupe" id="grp_name" name="grp_name" required>
-    <button type="submit">Créer</button>
-  </form>
+    <p>Bienvenue, {{user.user_name}} {{user.user_firstname}}!</p>
+
+    <h2>Groupes</h2>
+    {{#if userGroupMemberships.length}}
+      <ul>
+        {{#each userGroupMemberships as |membership|}}
+          <li><a href="/groupe/{{membership.groupe.grp_id}}">{{membership.groupe.grp_name}}</a></li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>Vous n'appartenez à aucun groupe pour le moment.</p>
+    {{/if}}
+
+    <form method="POST" action="/create-group">
+      <label for="NomGroupe">Nom du groupe</label>
+      <input type="NomGroupe" id="grp_name" name="grp_name" required>
+      <button type="submit">Créer</button>
+    </form>
+  {{else}}
+    <p>Connectez-vous pour accéder au tableau de bord.</p>
+  {{/if}}
 
 </body>
 </html>
