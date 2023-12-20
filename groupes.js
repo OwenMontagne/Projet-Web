@@ -69,6 +69,7 @@ const userBelongsToGroup = async (req, res, next) => {
 };
 
 // Route pour afficher la page du groupe
+// Route pour afficher la page du groupe avec les rappels
 router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
   try {
     const groupId = parseInt(req.params.id, 10);
@@ -77,7 +78,7 @@ router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
     const group = await prisma.groupe.findUnique({
       where: {
         grp_id: groupId,
-      }
+      },
     });
 
     // Récupérer les membres du groupe
@@ -90,14 +91,20 @@ router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
       },
     });
 
+    // Récupérer les rappels du groupe
+    const rappels = await prisma.rappel.findMany({
+      where: {
+        grp_id: groupId,
+      },
+    });
 
-    res.render('groupe', { group, groupMembers, user: req.session.user });
-
+    res.render('groupe', { group, groupMembers, groupRappels, user: req.session.user });
   } catch (error) {
     console.error('Error fetching group details:', error);
     res.status(500).send('Une erreur s\'est produite lors de la récupération des détails du groupe.');
   }
 });
+
 
 
 
@@ -143,6 +150,32 @@ router.post('/add_user_to_grp/:groupId', async (req, res) => {
   } catch (error) {
     console.error('Error adding user to group:', error);
     res.status(500).send('Une erreur s\'est produite lors de l\'ajout de l\'utilisateur au groupe.');
+  }
+});
+
+
+
+// Route pour ajouter un rappel
+router.post('/add_reminder/:groupId', userBelongsToGroup, async (req, res) => {
+  const { rappel_name, description, due_date, color } = req.body;
+  const groupId = parseInt(req.params.groupId, 10);
+
+  try {
+    // Ajouter le rappel à la base de données
+    await prisma.rappel.create({
+      data: {
+        rappel_name,
+        description,
+        due_date: new Date(due_date),
+        color,
+        grp_id: groupId,
+      },
+    });
+
+    res.redirect(`/groupe/${groupId}`);
+  } catch (error) {
+    console.error('Error adding reminder:', error);
+    res.status(500).send('Une erreur s\'est produite lors de l\'ajout du rappel.');
   }
 });
 
