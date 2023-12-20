@@ -24,6 +24,26 @@
             <p style="color: red;">{{error}}</p>
         {{/if}}
     </div>
+
+<div>
+    <h2>Rappels</h2>
+    <ul>
+        {{#each group.rappels as |rappel|}}
+            <li>{{rappel.contenu}} - {{rappel.date}}</li>
+        {{/each}}
+    </ul>
+
+    <form method="POST" action="/add_reminder/{{group.grp_id}}">
+        <label for="reminder_content">Contenu du rappel</label>
+        <input type="text" id="reminder_content" name="reminder_content" required>
+        
+        <label for="reminder_date">Date du rappel</label>
+        <input type="datetime-local" id="reminder_date" name="reminder_date" required>
+
+        <button type="submit">Ajouter Rappel</button>
+    </form>
+</div>
+
 </body>
 </html>
 

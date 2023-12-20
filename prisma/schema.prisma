@@ -35,3 +35,12 @@ model Appartenance_User_Grp {
   utilisateur              Utilisateur @relation(fields: [user_id], references: [user_id])
   groupe                   Groupe      @relation(fields: [grp_id], references: [grp_id])
 }
+
+// Reminder model
+model Rappel {
+  rappel_id  Int       @id @default(autoincrement())
+  contenu    String    @db.Text
+  date       DateTime
+  grp_id     Int
+  groupe     Groupe    @relation(fields: [grp_id], references: [grp_id])
+}

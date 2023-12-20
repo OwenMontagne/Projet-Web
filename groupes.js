@@ -125,4 +125,25 @@ router.post('/add_user_to_grp/:groupId', async (req, res) => {
   }
 });
 
+router.post('/add_reminder/:groupId', async (req, res) => {
+  const { reminder_content, reminder_date } = req.body;
+  const groupId = parseInt(req.params.groupId, 10);
+
+  try {
+    // Ajouter le rappel au groupe
+    await prisma.rappel.create({
+      data: {
+        contenu: reminder_content,
+        date: new Date(reminder_date),
+        grp_id: groupId,
+      },
+    });
+
+    res.redirect(`/groupe/${groupId}`);
+  } catch (error) {
+    console.error('Error adding reminder:', error);
+    res.status(500).send('Une erreur s\'est produite lors de l\'ajout du rappel.');
+  }
+});
+
 module.exports = router;
