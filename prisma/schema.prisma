@@ -25,6 +25,7 @@ model Groupe {
   grp_id    Int      @id @default(autoincrement())
   grp_name  String   @db.VarChar(100) @unique
   users     Appartenance_User_Grp[]
+  rappels   Rappel[]
 }
 
 // Membership model
@@ -36,11 +37,13 @@ model Appartenance_User_Grp {
   groupe                   Groupe      @relation(fields: [grp_id], references: [grp_id])
 }
 
-// Reminder model
+// Rappel model
 model Rappel {
-  rappel_id  Int       @id @default(autoincrement())
-  contenu    String    @db.Text
-  date       DateTime
-  grp_id     Int
-  groupe     Groupe    @relation(fields: [grp_id], references: [grp_id])
+  rappel_id       Int      @id @default(autoincrement())
+  rappel_name     String   @db.VarChar(100)
+  description     String   @db.Text
+  due_date        DateTime
+  color           String   @db.VarChar(20)
+  grp_id          Int
+  groupe          Groupe   @relation(fields: [grp_id], references: [grp_id])
 }

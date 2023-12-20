@@ -126,15 +126,17 @@ router.post('/add_user_to_grp/:groupId', async (req, res) => {
 });
 
 router.post('/add_reminder/:groupId', async (req, res) => {
-  const { reminder_content, reminder_date } = req.body;
+  const { rappel_name, rappel_description, rappel_due_date, rappel_color } = req.body;
   const groupId = parseInt(req.params.groupId, 10);
 
   try {
     // Ajouter le rappel au groupe
     await prisma.rappel.create({
       data: {
-        contenu: reminder_content,
-        date: new Date(reminder_date),
+        rappel_name,
+        description: rappel_description,
+        due_date: new Date(rappel_due_date),
+        color: rappel_color,
         grp_id: groupId,
       },
     });
