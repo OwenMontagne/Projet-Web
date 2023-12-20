@@ -36,9 +36,7 @@ router.post('/create-group', async (req, res) => {
   }
 });
 
-router.post('/add-user-to-group', async (req, res) => {
-  // code pour ajouter un utilisateur à un groupe
-});
+
 
 // Middleware to check if the user belongs to the group
 const userBelongsToGroup = async (req, res, next) => {
@@ -69,7 +67,7 @@ const userBelongsToGroup = async (req, res, next) => {
 };
 
 router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
-  const groupId = parseInt(req.params.id, 10);
+  let groupId = parseInt(req.params.id, 10);
   const group = await prisma.groupe.findUnique({
     where: {
       grp_id: groupId,
@@ -80,6 +78,49 @@ router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
     res.render('groupe', { group });
   } else {
     res.status(404).send('Groupe not found');
+  }
+});
+
+
+router.post('/add_user_to_grp/', userBelongsToGroup, async (req, res) => {
+  const { user_email } = req.body;
+
+  try {
+    // Retrieve user by email
+    const userToAdd = await prisma.utilisateur.findUnique({
+      where: {
+        user_email,
+      },
+    });
+
+    if (userToAdd) {
+      // Check if the user is already a member of the group
+      const existingMembership = await prisma.appartenance_User_Grp.findFirst({
+        where: {
+          user_id: userToAdd.user_id,
+          grp_id: groupId,
+        },
+      });
+
+      if (existingMembership) {
+        res.status(400).send('L\'utilisateur est déjà membre de ce groupe.');
+      } else {
+        // Add user to the group
+        await prisma.appartenance_User_Grp.create({
+          data: {
+            user_id: userToAdd.user_id,
+            grp_id: groupId,
+          },
+        });
+
+        res.redirect(`/groupe/${groupId}`);
+      }
+    } else {
+      res.status(404).send('Utilisateur non trouvé.');
+    }
+  } catch (error) {
+    console.error('Error adding user to group:', error);
+    res.status(500).send('Une erreur s\'est produite lors de l\'ajout de l\'utilisateur au groupe.');
   }
 });
 

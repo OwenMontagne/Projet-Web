@@ -14,9 +14,7 @@ router.get('/dashboard', async (req, res) => {
 
     // Récupérer l'ID de l'utilisateur de la session
     const userId = req.session.user.user_id;
-
-    console.log('User ID:', userId); // Add this log to check if user ID is retrieved correctly
-
+    
     // Récupérer les groupes auxquels l'utilisateur appartient
     const userGroupMemberships = await prisma.appartenance_User_Grp.findMany({
       where: {
@@ -26,8 +24,6 @@ router.get('/dashboard', async (req, res) => {
         groupe: true,
       },
     });
-
-    console.log('User group memberships:', userGroupMemberships);
 
     res.render('dashboard', { userGroupMemberships, user: req.session.user });
   } catch (error) {
