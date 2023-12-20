@@ -13,6 +13,7 @@
     <p style="color: red;">{{error}}</p>
   {{/if}}
 
+  <div class="auth-form">
   <form method="POST" action="/register">
     <label for="nom">Nom:</label>
     <input type="text" id="user_name" name="user_name" required>
@@ -38,5 +39,6 @@
   </form>
 
   <p>Vous avez déjà un compte ? <a href="/login">Connectez-vous</a></p>
+  </div>
 </body>
 </html>
