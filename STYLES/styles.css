@@ -55,6 +55,23 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Styles pour la gestion des listes */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 5px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
 /* Styles spécifiques pour la page de connexion (login) */
 
 #user_email,
