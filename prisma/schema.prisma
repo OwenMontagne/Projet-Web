@@ -23,7 +23,7 @@ model Utilisateur {
 // Group model
 model Groupe {
   grp_id    Int      @id @default(autoincrement())
-  grp_name  String   @db.VarChar(100)
+  grp_name  String   @db.VarChar(100) @unique
   users     Appartenance_User_Grp[]
 }
 
