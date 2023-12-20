@@ -32,37 +32,7 @@
             {{/each}}
         </ul>
 
-        <!-- Formulaire pour ajouter un rappel -->
-        <form class="reminder-form" method="POST" action="/add_reminder/{{group.grp_id}}">
-            <label for="rappel_name">Nom du rappel</label>
-            <input type="text" id="rappel_name" name="rappel_name" required>
-
-            <label for="description">Description</label>
-            <textarea id="description" name="description" required></textarea>
-
-            <label for="due_date">Date d'échéance</label>
-            <input type="datetime-local" id="due_date" name="due_date" required>
-
-            <label for="color">Couleur</label>
-            <input type="text" id="color" name="color" required>
-
-            <button type="submit">Ajouter Rappel</button>
-        </form>
-
-        {{#if error}}
-            <p style="color: red;">{{error}}</p>
-        {{/if}}
-    </div>
-
-<div>
-    <h2>Rappels</h2>
-    <ul>
-        {{#each group.rappels as |rappel|}}
-            <li>{{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}} - {{rappel.color}}</li>
-        {{/each}}
-    </ul>
-
-    <form method="POST" action="/add_reminder/{{group.grp_id}}">
+        <form method="POST" action="/add_reminder/{{group.grp_id}}">
         <label for="rappel_name">Nom du rappel</label>
         <input type="text" id="rappel_name" name="rappel_name" required>
         
@@ -76,8 +46,13 @@
         <input type="text" id="rappel_color" name="rappel_color" required>
 
         <button type="submit">Ajouter Rappel</button>
-    </form>
-</div>
+        </form>
+
+        {{#if error}}
+            <p style="color: red;">{{error}}</p>
+        {{/if}}
+    </div>
+
 
 </body>
 </html>
