@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>Page de groupe</title>
+    <style>
+        .reminder-form {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Page de groupe</h1>
@@ -9,8 +14,8 @@
     <div>
         <h2>Membres du groupe</h2>
         <ul>
-            {{#each groupMemberships as |membership|}}
-                <li>{{membership.user.user_name}} {{membership.user.user_firstname}}</li>
+            {{#each groupMembers as |membership|}}
+                <li>{{membership.utilisateur.user_name}} {{membership.utilisateur.user_firstname}}</li>
             {{/each}}
         </ul>
         
@@ -18,6 +23,30 @@
             <label for="user_email">Email de l'utilisateur</label>
             <input type="email" id="user_email" name="user_email" required>
             <button type="submit">Ajouter</button>
+        </form>
+
+        <h2>Rappels</h2>
+        <ul>
+            {{#each groupRappels as |rappel|}}
+                <li>{{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}}</li>
+            {{/each}}
+        </ul>
+
+        <!-- Formulaire pour ajouter un rappel -->
+        <form class="reminder-form" method="POST" action="/add_reminder/{{group.grp_id}}">
+            <label for="rappel_name">Nom du rappel</label>
+            <input type="text" id="rappel_name" name="rappel_name" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="due_date">Date d'échéance</label>
+            <input type="datetime-local" id="due_date" name="due_date" required>
+
+            <label for="color">Couleur</label>
+            <input type="text" id="color" name="color" required>
+
+            <button type="submit">Ajouter Rappel</button>
         </form>
 
         {{#if error}}
@@ -52,4 +81,3 @@
 
 </body>
 </html>
-

@@ -38,25 +38,27 @@ router.post('/create-group', async (req, res) => {
 
 
 
-// Middleware to check if the user belongs to the group
+// Middleware pour vérifier si l'utilisateur appartient au groupe
 const userBelongsToGroup = async (req, res, next) => {
   try {
     if (!req.session.user) {
-      // If the user is not logged in, redirect to login
+      // Si l'utilisateur n'est pas connecté, redirigé vers la page de connexion
       return res.redirect('/login');
     }
 
     const userId = req.session.user.user_id;
     const groupId = parseInt(req.params.id, 10);
+    // Vérifier si l'utilisateur appartient au groupe
     const userBelongsToGroup = await prisma.appartenance_User_Grp.findMany({
       where: {
         user_id: userId,
         grp_id: groupId,
       },
     });
-
+    // Si l'utilisateur appartient au groupe, passer au middleware suivant ou à la route
     if (userBelongsToGroup.length > 0) {
       next();
+    // Sinon, renvoyer une erreur 403
     } else {
       res.status(403).send('Vous n\'appartenez pas à ce groupe, ou celui-ci est inexistant.');
     }
@@ -66,20 +68,46 @@ const userBelongsToGroup = async (req, res, next) => {
   }
 };
 
+// Route pour afficher la page du groupe
 router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
-  let groupId = parseInt(req.params.id, 10);
-  const group = await prisma.groupe.findUnique({
-    where: {
-      grp_id: groupId,
-    },
-  });
+  try {
+    const groupId = parseInt(req.params.id, 10);
 
-  if (group) {
-    res.render('groupe', { group });
-  } else {
-    res.status(404).send('Groupe not found');
+    // Récupérer les détails du groupe
+    const group = await prisma.groupe.findUnique({
+      where: {
+        grp_id: groupId,
+      }
+    });
+
+    // Récupérer les membres du groupe
+    const groupMembers = await prisma.appartenance_User_Grp.findMany({
+      where: {
+        grp_id: groupId,
+      },
+      include: {
+        utilisateur: true,
+      },
+    });
+
+    // Récupérer les rappels du groupe
+    const groupRappels = await prisma.rappel.findMany({
+      where: {
+        grp_id: groupId,
+      },
+    });
+
+    res.render('groupe', { group, groupMembers, groupRappels, user: req.session.user });
+
+  } catch (error) {
+    console.error('Error fetching group details:', error);
+    res.status(500).send('Une erreur s\'est produite lors de la récupération des détails du groupe.');
   }
 });
+
+
+
+
 
 
 router.post('/add_user_to_grp/:groupId', async (req, res) => {
