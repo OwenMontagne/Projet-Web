@@ -7,6 +7,8 @@
             margin-top: 20px;
         }
     </style>
+    <link rel="stylesheet" href="/auth.css">
+
 </head>
 <body>
     <h1>Page de groupe</h1>
@@ -28,9 +30,10 @@
         <h2>Rappels</h2>
         <ul>
             {{#each groupRappels as |rappel|}}
-                <li>{{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}}</li>
+                <li style="color: {{rappel.color}};">{{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}}</li>
             {{/each}}
         </ul>
+
 
         <form method="POST" action="/add_reminder/{{group.grp_id}}">
         <label for="rappel_name">Nom du rappel</label>
@@ -43,7 +46,7 @@
         <input type="datetime-local" id="rappel_due_date" name="rappel_due_date" required>
 
         <label for="rappel_color">Couleur du rappel</label>
-        <input type="text" id="rappel_color" name="rappel_color" required>
+        <input type="color" id="rappel_color" name="rappel_color" value="#000000" required>
 
         <button type="submit">Ajouter Rappel</button>
         </form>
