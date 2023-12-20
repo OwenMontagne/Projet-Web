@@ -9,6 +9,7 @@ body {
 
 h1 {
     color: #333;
+    text-align: center;
 }
 
 form {
@@ -46,6 +47,9 @@ button:hover {
     background-color: #45a049;
 }
 
+p {
+    text-align: center;
+}
 a {
     color: #3498db;
     text-decoration: none;
@@ -53,22 +57,6 @@ a {
 
 a:hover {
     text-decoration: underline;
-}
-
-/* Styles pour la gestion des listes */
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    margin-bottom: 5px;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 
