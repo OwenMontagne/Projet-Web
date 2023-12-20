@@ -9,8 +9,8 @@
     <div>
         <h2>Membres du groupe</h2>
         <ul>
-            {{#each groupMemberships as |membership|}}
-                <li>{{membership.user.user_name}} {{membership.user.user_firstname}}</li>
+            {{#each groupMembers as |membership|}}
+                <li>{{membership.utilisateur.user_name}} {{membership.utilisateur.user_firstname}}</li>
             {{/each}}
         </ul>
         
@@ -26,4 +26,3 @@
     </div>
 </body>
 </html>
-
