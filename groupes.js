@@ -82,8 +82,9 @@ router.get('/groupe/:id', userBelongsToGroup, async (req, res) => {
 });
 
 
-router.post('/add_user_to_grp/', userBelongsToGroup, async (req, res) => {
+router.post('/add_user_to_grp/:groupId', async (req, res) => {
   const { user_email } = req.body;
+  const groupId = parseInt(req.params.groupId, 10);
 
   try {
     // Retrieve user by email
