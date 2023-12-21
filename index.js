@@ -5,7 +5,7 @@ const { engine } = require('express-handlebars');
 
 const bodyParser = require('body-parser');
 
-const { sessionMiddleware } = require('./session.js'); // Import session middleware
+const { sessionMiddleware } = require('./Routes/session.js'); // Import session middleware
 
 const app = express();
 
