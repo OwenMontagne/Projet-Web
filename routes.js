@@ -24,19 +24,19 @@ const prisma = new PrismaClient();
 
   
 //Utiliser le login.js
-router.use(require('./login.js'));
+router.use(require('./Routes/login.js'));
 
 //Utiliser le register.js
-router.use(require('./register.js'));
+router.use(require('./Routes/register.js'));
 
 //Utiliser le grouproute.js
-router.use(require('./groupes.js'));
+router.use(require('./Routes/groupes.js'));
 
 //Utiliser le dashboard.js
-router.use(require('./dashboard.js'));
+router.use(require('./Routes/dashboard.js'));
 
 //Utilser le rappel.js
-router.use(require('./rappel.js'));
+router.use(require('./Routes/rappel.js'));
   
 
 
