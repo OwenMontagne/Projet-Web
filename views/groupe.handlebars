@@ -30,7 +30,12 @@
         <h2>Rappels</h2>
         <ul>
             {{#each groupRappels as |rappel|}}
-                <li style="color: {{rappel.color}};">{{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}}</li>
+                <li style="color: {{rappel.color}};">
+                    {{rappel.rappel_name}} - {{rappel.description}} - {{rappel.due_date}}
+                    <form method="POST" action="/delete_reminder/{{rappel.rappel_id}}/{{group.grp_id}}" style="display: inline;">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </li>
             {{/each}}
         </ul>
 

@@ -176,5 +176,25 @@ router.post('/add_reminder/:groupId', async (req, res) => {
   }
 });
 
+router.post('/delete_reminder/:reminderId/', async (req, res) => {
+  const reminderId = parseInt(req.params.reminderId, 10);
+
+  try {
+    // Supprimer le rappel du groupe
+    await prisma.rappel.delete({
+      where: {
+        rappel_id: reminderId,
+      },
+    });
+
+    res.redirect(`/dashboard`); // Redirige vers la page du groupe, ajustez si nécessaire
+  } catch (error) {
+    console.error('Error deleting reminder:', error);
+    res.status(500).send('Une erreur s\'est produite lors de la suppression du rappel.');
+  }
+});
+
+
+
 
 module.exports = router;
