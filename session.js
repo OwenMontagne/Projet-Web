@@ -2,17 +2,16 @@
 
 const express_session = require('express-session');
 
-// Session configuration
+// Configuration de la session
 const sessionConfig = {
-  secret: 'laclefsecretesupersecuriseesinoncavavousmoicavasuper', // Change this to a secure secret key
+  secret: 'laclefsecretesupersecuriseesinoncavavousmoicavasuper',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 360000, // 1 hour
+    maxAge: 360000, // 1 heure
   },
 };
 
-// Middleware to manage user sessions
 const sessionMiddleware = express_session(sessionConfig);
 
 module.exports = { sessionMiddleware };

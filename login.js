@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 // Routes /login
 router.get('/login', (req, res) => {
-    res.render('login', { error: req.session.loginError }); // Pass login error to the view
+    res.render('login', { error: req.session.loginError }); // Passer l'erreur de connexion à la vue
   });
   
   router.post('/login', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/login', (req, res) => {
         res.redirect('/login');
       } else {
         req.session.user = utilisateur;
-        res.redirect('/dashboard'); // Redirect to the dashboard or another page
+        res.redirect('/dashboard'); // Rediriger vers la page de connexion
       }
     } catch (error) {
       console.error('Error during login:', error);

@@ -16,9 +16,6 @@ router.get('/register', (req, res) => {
   
     try {
       // Enregistrement des données dans la base de données avec Prisma
-  
-      //hasshage du mot de passe
-      //const user_hash_passw = await bcrypt.hash(user_passw, saltRounds);
       const utilisateur = await prisma.utilisateur.create({
         data: {
           user_name,

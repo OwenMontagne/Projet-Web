@@ -6,21 +6,19 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 
-  // Middleware to check if the user is authenticated
+  // Middleware pour vérifier si l'utilisateur est authentifié
   const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
-      // User is authenticated, proceed to the next middleware or route
+      // L'utilisateur est authentifié, passer au middleware ou à la route suivante
       next();
     } else {
-      // User is not authenticated, redirect to login page
+      // Utilisateur non authentifié, redirection vers la page de connexion
       res.redirect('/login');
     }
   };
   
   // Routes
   router.get('/', isAuthenticated, (req, res) => {
-    // If the middleware passes, the user is authenticated
-    // Render the dashboard or any other page you want to display for authenticated users
     res.redirect('/dashboard', { user: req.session.user });
   });
 
@@ -36,6 +34,9 @@ router.use(require('./groupes.js'));
 
 //Utiliser le dashboard.js
 router.use(require('./dashboard.js'));
+
+//Utilser le rappel.js
+router.use(require('./rappel.js'));
   
 
 
